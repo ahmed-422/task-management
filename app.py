@@ -13,7 +13,6 @@ class TaskItem(db.Model):
     def __repr__(self):
         return f'<TaskItem {self.id}'
 
-tasks = []
 
 @app.route('/', methods =['GET','POST'])
 def index():
@@ -29,12 +28,6 @@ def index():
     print(items)
     return render_template('index.html', items = items)
     
-# @app.route('/add_task', methods=['POST'])
-# def add_task():
-#     task = request.form['title']
-#     task_description = request.form['description']
-#     tasks.append({'title': task, 'description': task_description, 'completed': False})
-#     return redirect(url_for('index'))
 
 @app.route('/complete_task/<int:item_id>')
 def complete_task(item_id):
@@ -46,10 +39,10 @@ def complete_task(item_id):
     return redirect('/')
 
 
-@app.route('/edit_task/<int:task_id>')
-def edit_task(task_id):
-    tasks[task_id]['completed'] = True
-    return redirect(url_for('index'))
+@app.route('/edit_task/<int:item_id>')
+def edit_task(item_id):
+    item = TaskItem.query.get_or_404(item_id)
+    return redirect('/')
 
 @app.route('/delete_task/<int:item_id>',methods =('GET','POST'))
 def delete_task(item_id):

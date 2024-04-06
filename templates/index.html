@@ -122,59 +122,45 @@
                   {% for item in items  %}
                     <!-- Todo Item  -->
                     <div class="row px-3 align-items-center todo-item rounded">
-                        <div class="col-auto m-1 p-0 d-flex align-items-center">
-                            <h2 class="">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            </h2>
-                        </div>
-                        <!-- <div class="col-auto m-1 p-0 d-flex align-items-center">
-                            <h2 class="m-0 p-0">
-                                <i class="fa fa-square-o text-primary btn m-0 p-0" data-toggle="tooltip" data-placement="bottom" title="Mark as complete"></i>
-                                <i class="fa fa-check-square-o text-primary btn m-0 p-0 d-none" data-toggle="tooltip" data-placement="bottom" title="Mark as todo"></i>
-                            </h2>
-                        </div> -->
+               
                         <div class="col px-1 m-1 d-flex align-items-center">
                              {% if item.completed %}
-                            <!-- <input type="text" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="{{ item.content }}" title="Renew car insurance" /> -->
-                            <del>{{ item.content }}</del>
+                           
+                            <del class="form-control-lg bg-transparent edit-todo-input rounded px-3">{{ item.content }}</del>
                             <!-- <button class="edit-button btn btn-sm btn-primary ml-2">Edit</button> -->
-                            <form class="edit-todo-input  d-none" action="/delete_task/1" method="post">
-                                <input type="text"  class="form-control form-control-lg border-0  rounded px-3" value="{{ item.content }}" />
-                                <button type="submit">Save</button>
-                            </form>
+                            
                             {% else %}
-                            <input type="text" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="{{ item.content }}" title="Renew car insurance" />
+                            <input type="text" class="form-control form-control-lg border-0 edit-todo-input bg-transparent rounded px-3" readonly value="{{ item.content }}"  />
                             <!-- <button class="edit-button btn btn-sm btn-primary ml-2">Edit</button> -->
-                            <form class="edit-todo-input  d-none" action="/delete_task/1" method="post">
-                                <input type="text"  class="form-control form-control-lg border-0  rounded px-3" value="item.content" />
-                                <button type="submit">Save</button>
+                            <form class="edit-todo-input ed d-none" action="{{ url_for('edit_task', item_id = item.id) }}" method="post">
+                                <input type="text" name="edited_content"  class="form-control form-control-lg border-0  rounded px-3" value="{{item.content}}" />
+                                <button type="submit" class="text-info btn m-0 p-0">Save</button>
                             </form>
                             {% endif %}
-                            <div>
-                                {% if not item.completed %}
-                                <a href="{{ url_for('complete_task', item_id=item.id) }}">✔️
-                               </a>
-                               {% endif %}
-                               <a href="{{ url_for('delete_task', item_id = item.id) }}">[x]</a>
-
-
-
-                            </div>
                            
-
                         </div>
                         
                         <div class="col-auto m-1 p-0 todo-actions">
-                            <div class="d-flex flex-row-reverse">
-                               <div>
+                            <div class="d-flex flex-row">
+                                {% if not item.completed %}
+                                <div>
                                 <h5 class="m-0 p-0 px-2">
-                                    <button type="submit" class="edit-button fa fa-pencil text-info btn m-0 p-0"  formaction="/edit_task" data-placement="bottom" title="Edit task"></button>
+                                    <a class="fa-solid fa-check text-success btn m-0 p-0"  href="{{ url_for('complete_task', item_id=item.id) }}" title="Complete task" > </a>
+                                   
                                 </h5>
-
-                               </div> 
+                                </div>
+                                <div>
+                                    <h5 class="m-0 p-0 px-2">
+                                        <button type="button" class="edit-button fa fa-pencil text-info btn m-0 p-0"   data-placement="bottom" title="Edit task"></button>
+                                    </h5>
+    
+                                </div> 
+                                
+                               {% endif %}
+                               
                                <div>
                                 <h5 class="m-0 p-0 px-2">
-                                    <a   class="fa-solid fa-trash-can text-danger btn m-0 p-0"  href="/delete_task/1" title="Delete task"> </a>
+                                    <a   class="fa-solid fa-trash-can text-danger btn m-0 p-0"  href="{{ url_for('delete_task', item_id = item.id) }}" title="Delete task"> </a>
                                     
                                 </h5>
 
