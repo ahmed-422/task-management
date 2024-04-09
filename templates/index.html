@@ -158,10 +158,10 @@
                 $(document).ready(function(){
                     $('.edit-button').click(function(){
                         // Get the container of the task title
-                        var container = $(this).closest('.col');
+                        var container = $(this).closest('.todo-item');
                         
                         // Toggle visibility of the input fields
-                        container.find('.task-title-container').toggleClass('d-none');
+                      
                         container.find('.edit-todo-input').toggleClass('d-none');
                     });
                 });
